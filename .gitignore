@@ -1,0 +1,16 @@
+# Cache folder
+/__pycache__/*
+config/__pycache__/
+functions/__pycache__/
+helper/__pycache__/
+recsys/__pycache__/
+ultis/__pycache__/
+/.data/*
+/.ipynb_checkpoints/*
+/.vscode/*
+
+#Dataset
+/dataset/*
+
+#Env
+/env/*
