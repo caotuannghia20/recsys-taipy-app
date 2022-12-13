@@ -28,7 +28,7 @@ def fit(
 ):
     global_mean = np.mean(X[:, 2])
     if algorithm == "kNN":
-        S, x_rated, x_list, y_list, global_mean = compute_similarity_matrix(
+        S, x_rated, x_list, y_list = compute_similarity_matrix(
             X, sim_measure
         )
         pu, qi, bu, bi = [], [], [], []
