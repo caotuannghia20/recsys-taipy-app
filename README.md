@@ -8,7 +8,7 @@
 - Step 1: Clone this repo to the computer.
 At the conmmand prompt, type <br/>
 <code>git clone https://github.com/caotuannghia20/recsys-taipy-app.git </code>
- - Step 2: Download the dataset at [here](https://drive.google.com/file/d/1E_6jSGexFkjQmECkXEoegsp1KzoeOS4C/view?usp=sharing)
+ - Step 2: Download the dataset [here](https://drive.google.com/file/d/1E_6jSGexFkjQmECkXEoegsp1KzoeOS4C/view?usp=sharing)
  - Step 3: Edit the dataset path in **config/config.py**
  - Step 4: Install the requirements enviroment, type : <br/>
  <code>pip install -r requirements.txt </code>
