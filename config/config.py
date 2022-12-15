@@ -44,19 +44,22 @@ movie_name_cfg = Config.configure_data_node(
 )
 
 trainset_cfg = Config.configure_data_node(
-    id="trainset", scope=Scope.PIPELINE, cacheable=True
-)
+    id="trainset", scope=Scope.PIPELINE, cacheable=True)
+
 testset_cfg = Config.configure_data_node(
-    id="testset", scope=Scope.PIPELINE, cacheable=True
-)
+    id="testset", scope=Scope.PIPELINE, cacheable=True)
+
 true_testset_movies_id_cfg = Config.configure_data_node(
-    id="true_testset_movies_id", scope=Scope.PIPELINE, cacheable=True
-)
-algorithm_cfg = Config.configure_in_memory_data_node(id="algorithm", default_data="kNN")
+    id="true_testset_movies_id", scope=Scope.PIPELINE, cacheable=True)
+
+algorithm_cfg = Config.configure_in_memory_data_node(
+    id="algorithm", default_data="kNN")
+
 global_mean_cfg = Config.configure_data_node(
-    id="global_mean", cope=Scope.GLOBAL, cacheable=True
-)
-predictions_cfg = Config.configure_data_node(id="predictions", scope=Scope.PIPELINE)
+    id="global_mean", cope=Scope.GLOBAL, cacheable=True)
+
+predictions_cfg = Config.configure_data_node(
+    id="predictions", scope=Scope.PIPELINE)
 
 # Config task
 load_data_task_cfg = Config.configure_task(
@@ -70,23 +73,13 @@ train_data_task_cfg = Config.configure_task(
     id="train_data",
     function=fit,
     input=[
-        trainset_cfg,
-        sim_measure_cfg,
-        n_factors_cfg,
-        n_epochs_cfg,
-        learning_rate_cfg,
+        trainset_cfg, sim_measure_cfg,
+        n_factors_cfg, n_epochs_cfg, learning_rate_cfg,
         algorithm_cfg,
     ],
     output=[
-        similarity_matrix_cfg,
-        list_ur_ir_cfg,
-        users_id_cfg,
-        items_id_cfg,
-        global_mean_cfg,
-        pu_cfg,
-        qi_cfg,
-        bu_cfg,
-        bi_cfg,
+        similarity_matrix_cfg, list_ur_ir_cfg, users_id_cfg, items_id_cfg, global_mean_cfg,
+        pu_cfg, qi_cfg, bu_cfg, bi_cfg,
     ],
 )
 
@@ -95,19 +88,9 @@ predict_task_cfg = Config.configure_task(
     function=predict,
     input=[
         testset_cfg,
-        x_id_cfg,
-        list_ur_ir_cfg,
-        similarity_matrix_cfg,
-        n_k_neighboor_cfg,
-        n_min_k_cfg,
-        users_id_cfg,
-        items_id_cfg,
-        global_mean_cfg,
-        true_testset_movies_id_cfg,
-        bu_cfg,
-        bi_cfg,
-        pu_cfg,
-        qi_cfg,
+        x_id_cfg, list_ur_ir_cfg, similarity_matrix_cfg, n_k_neighboor_cfg, n_min_k_cfg, users_id_cfg, items_id_cfg,
+        global_mean_cfg, true_testset_movies_id_cfg,
+        bu_cfg, bi_cfg, pu_cfg, qi_cfg,
         algorithm_cfg,
     ],
     output=predictions_cfg,

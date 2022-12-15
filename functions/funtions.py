@@ -6,8 +6,20 @@ from helper.knn_helper import predict_pair, compute_similarity_matrix
 
 
 def take_data(
-    train_data: pd.DataFrame, test_data: pd.DataFrame, movie_name_cfg: pd.DataFrame
+    train_data: pd.DataFrame, test_data: pd.DataFrame, movie_name: pd.DataFrame
 ):
+    """Convert data from Pd.DataFrame to numpyarray
+
+    Args:
+        train_data (pd.DataFrame): train_data
+        test_data (pd.DataFrame): test_data
+        movie_name_cfg (pd.DataFrame): the name of movies
+
+    Returns:
+        train_set (numpydarray)
+        test_set (numpydarray)
+        true_testset_movies_id (numpydarray)
+    """
     loader = DataLoader()
     true_testset_movies_id = test_data.i_id.to_numpy()
     train_set, test_set = loader.load_csv2ndarray(
@@ -26,6 +38,27 @@ def fit(
     learning_rate=0.01,
     algorithm="kNN",
 ):
+    """Train the data
+
+    Args:
+        X (numpyarray): train set
+        sim_measure (str, optional): Defaults to "pcc".
+        n_factors (int, optional): Defaults to 100.
+        n_epochs (int, optional): Defaults to 50.
+        learning_rate (float, optional): Defaults to 0.01.
+        algorithm (str, optional): Defaults to "kNN".
+
+    Returns:
+        S (numpyarray)
+        x_rated (numpyarray)
+        x_list (numpyarray)
+        y_list (numpyarray)
+        global_mean (float)
+        pu (numpyarray)
+        qi (numpyarray)
+        bu (numpyarray)
+        bi (numpyarray)
+    """
     global_mean = np.mean(X[:, 2])
     if algorithm == "kNN":
         S, x_rated, x_list, y_list = compute_similarity_matrix(
@@ -47,65 +80,49 @@ def fit(
         bi = np.zeros(n_item)
 
         lr_pu, lr_qi, lr_bu, lr_bi, reg_pu, reg_qi, reg_bu, reg_bi = (
-            learning_rate,
-            learning_rate,
-            learning_rate,
-            learning_rate,
-            learning_rate,
-            learning_rate,
-            learning_rate,
-            learning_rate,
-        )
+            learning_rate, learning_rate, learning_rate, learning_rate, learning_rate, learning_rate, learning_rate, learning_rate,)
         pu, qi, bu, bi, _ = sgd(
-            X,
-            pu,
-            qi,
-            bu,
-            bi,
-            n_epochs,
-            global_mean,
-            n_factors,
-            lr_pu,
-            lr_qi,
-            lr_bu,
-            lr_bi,
-            reg_pu,
-            reg_qi,
-            reg_bu,
-            reg_bi,
+            X, pu, qi, bu, bi,
+            n_epochs, global_mean, n_factors,
+            lr_pu, lr_qi, lr_bu, lr_bi,
+            reg_pu, reg_qi, reg_bu, reg_bi,
         )
         S, x_rated, x_list, y_list = [], [], [], []
     else:
         S, x_rated, x_list, y_list, pu, qi, bu, bi = (
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-        )
+            0, 0, 0, 0, 0, 0, 0, 0,)
+
     return S, x_rated, x_list, y_list, global_mean, pu, qi, bu, bi
 
 
 def predict(
     test_set_origin,
-    x_id,
-    x_rated,
-    S,
-    k,
-    min_k,
-    x_list,
-    y_list,
-    global_mean,
-    true_testset_movies_id,
-    bu,
-    bi,
-    pu,
-    qi,
-    algorithm="MF",
+    x_id, x_rated, S, k, min_k, x_list, y_list,
+    global_mean, true_testset_movies_id,
+    bu, bi, pu, qi, algorithm="MF",
 ):
+    """Predict the ratings to movies
+
+    Args:
+        test_set_origin (numpyarray)
+        x_id (int)
+        x_rated (numpyarray)
+        S (numpyarray)
+        k (int)
+        min_k (int)
+        x_list (numpyarray)
+        y_list (numpyarray)
+        global_mean (float)
+        true_testset_movies_id (numpyarray)
+        bu (numpyarray)
+        bi (numpyarray)
+        pu (numpyarray)
+        qi (numpyarray)
+        algorithm (str, optional). Defaults to "MF".
+
+    Returns:
+        predictions (numpyarray)
+    """
     test_items = []
     test_set = np.zeros(
         (test_set_origin.shape[0], test_set_origin.shape[1] + 1))
@@ -126,10 +143,7 @@ def predict(
                 test_items[pair, 0].astype(int),
                 test_items[pair, 1].astype(int),
                 global_mean,
-                bu,
-                bi,
-                pu,
-                qi,
+                bu, bi, pu, qi,
             )
 
     elif algorithm == "kNN":
@@ -137,12 +151,8 @@ def predict(
             predictions[pair, 4] = predict_pair(
                 test_items[pair, 0].astype(int),
                 test_items[pair, 1].astype(int),
-                x_rated,
-                S,
-                k,
-                min_k,
-                x_list,
-                y_list,
+                x_rated, S, k, min_k,
+                x_list, y_list,
                 global_mean,
             )
 
