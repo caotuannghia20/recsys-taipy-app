@@ -1,10 +1,10 @@
-# How can this application do:
-- In the application, the user's information is secured as user_id
+# Movie Recommendation system application using Taipy
+- In the application, the user's information is secured as `user_id`.
 - The app recommends **top_k** movies for a user via user_id, also give the **top_k actual** movies that the user is interested in.
 - There are 2 models used to make recommendations: *kNN* and *MF*
 - There are two metrics to evaluate the performance of the model: *recall* and *precision*. These are calculated automatically after making recommendations
 
-# How to run the application on a local machine
+## Run the application on a local machine
 - Step 1: Clone this repo to the computer.
 At the conmmand prompt, type <br/>
 <code>git clone https://github.com/caotuannghia20/recsys-taipy-app.git </code>
@@ -14,7 +14,7 @@ At the conmmand prompt, type <br/>
  <code>pip install -r requirements.txt </code>
  - Step 5: At the conmmand prompt, type : <br/>
  <code>python main.py</code> <br/> to run the application on a local machine
-# How to use the application
+## Use the application
 After run the application:
 
  We choose the model to make recommendations
