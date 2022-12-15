@@ -46,17 +46,24 @@ movie_name_cfg = Config.configure_data_node(
 trainset_cfg = Config.configure_data_node(
     id="trainset", scope=Scope.PIPELINE, cacheable=True
 )
+
 testset_cfg = Config.configure_data_node(
     id="testset", scope=Scope.PIPELINE, cacheable=True
 )
+
 true_testset_movies_id_cfg = Config.configure_data_node(
     id="true_testset_movies_id", scope=Scope.PIPELINE, cacheable=True
 )
-algorithm_cfg = Config.configure_in_memory_data_node(id="algorithm", default_data="kNN")
+
+algorithm_cfg = Config.configure_in_memory_data_node(
+    id="algorithm", default_data="kNN")
+
 global_mean_cfg = Config.configure_data_node(
     id="global_mean", cope=Scope.GLOBAL, cacheable=True
 )
-predictions_cfg = Config.configure_data_node(id="predictions", scope=Scope.PIPELINE)
+
+predictions_cfg = Config.configure_data_node(
+    id="predictions", scope=Scope.PIPELINE)
 
 # Config task
 load_data_task_cfg = Config.configure_task(

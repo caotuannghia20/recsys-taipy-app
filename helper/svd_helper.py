@@ -21,7 +21,7 @@ def sgd(
     reg_bi,
 ):
     for epoch_ix in range(n_epochs):
-        pu, qi, bu, bi, train_loss = _run_svd_epoch(
+        pu, qi, bu, bi, train_loss = run_svd_epoch(
             X,
             pu,
             qi,
@@ -43,7 +43,7 @@ def sgd(
 
 
 @njit
-def _run_svd_epoch(
+def run_svd_epoch(
     X,
     pu,
     qi,

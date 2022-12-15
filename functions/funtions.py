@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from ultis.dataloader import DataLoader
 from helper.svd_helper import sgd, predict_svd_pair
-from helper.knn_helper import predict_pair, compute_similarity_matrix
+from helper.knn_helper import predict_knn_pair, compute_similarity_matrix
 
 
 def take_data(
@@ -134,7 +134,7 @@ def predict(
 
     elif algorithm == "kNN":
         for pair in range(n_pairs):
-            predictions[pair, 4] = predict_pair(
+            predictions[pair, 4] = predict_knn_pair(
                 test_items[pair, 0].astype(int),
                 test_items[pair, 1].astype(int),
                 x_rated,

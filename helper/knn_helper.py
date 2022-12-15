@@ -17,8 +17,6 @@ def compute_similarity_matrix(train_set, sim_measure="pcc"):
 
 def fit_train_set(train_set):
     X = train_set.copy()
-    # X[:, [0, 1]] = X[:, [1, 0]]  # Swap user_id column to movie_id column if using iiCF
-
     x_list = np.unique(X[:, 0])  # For uuCF, x -> user
     y_list = np.unique(X[:, 1])  # For uuCF, y -> item
     n_x = len(x_list)
@@ -110,7 +108,7 @@ def calculate_pearson_similarity(prods, freq, sqi, sqj, si, sj, n_x, min_sprt):
     return sim
 
 
-def predict_pair(x_id, y_id, x_rated, S, k, min_k, x_list, y_list, global_mean):
+def predict_knn_pair(x_id, y_id, x_rated, S, k, min_k, x_list, y_list, global_mean):
     x_known, y_known = False, False
     if x_id in x_list:
         x_known = True
@@ -124,10 +122,10 @@ def predict_pair(x_id, y_id, x_rated, S, k, min_k, x_list, y_list, global_mean):
         #     print(f"Can not predict rating of user {y_id} for item {x_id}.")
         return global_mean
 
-    return _predict(x_id, y_id, x_rated[y_id], S, k, min_k)
+    return predict_knn(x_id, y_id, x_rated[y_id], S, k, min_k)
 
 
-def _predict(x_id, y_id, x_rated, S, k, k_min):
+def predict_knn(x_id, y_id, x_rated, S, k, k_min):
     k_neighbors = np.zeros((k, 2))
     k_neighbors[:, 1] = -1  # All similarity degree is default to -1
 

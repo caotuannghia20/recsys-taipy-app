@@ -36,12 +36,12 @@
 Press <|recommend|button|on_action={predicts}|>
 <|layout|columns=1 1|
 <|
-To recommend top <|{top_k}|> movies to user <|{x_id+1}|>: <br/> <|{y_id}|tree|lov={results}|width = "400px"|> 
+To recommend top <|{top_k}|> movies to user <|{x_id+1}|>: <br/> <|{y_id}|tree|lov={results}|width = "400px"|>
 |>
 
 <|
 And these are the real movies the user <|{x_id+1}|> want to watch: <br/>
-<|{y_id_real}|tree|lov={results_real}|width = "400px"|> 
+<|{y_id_real}|tree|lov={results_real}|width = "400px"|>
 |>
 
 <|
@@ -94,12 +94,12 @@ And these are the real movies the user <|{x_id+1}|> want to watch: <br/>
 Press <|recommend|button|on_action={predicts}|>
 <|layout|columns=1 1|
 <|
-To recommend top <|{top_k}|> movies to user <|{x_id+1}|>: <br/> <|{y_id}|tree|lov={results}|width = "400px"|> 
+To recommend top <|{top_k}|> movies to user <|{x_id+1}|>: <br/> <|{y_id}|tree|lov={results}|width = "400px"|>
 |>
 
 <|
 And these are the real movies the user <|{x_id+1}|> want to watch: <br/>
-<|{y_id_real}|tree|lov={results_real}|width = "400px"|> 
+<|{y_id_real}|tree|lov={results_real}|width = "400px"|>
 |>
 
 <|
@@ -113,7 +113,7 @@ And these are the real movies the user <|{x_id+1}|> want to watch: <br/>
 |>
 
 <|
-**Recall** = <|{recall}|> 
+**Recall** = <|{recall}|>
 |>
 |>
 |>

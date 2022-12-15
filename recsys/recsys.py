@@ -9,10 +9,9 @@ import numpy as np
 from helper.knn_helper import calculate_precision_recall
 from config.config import pipeline_cfg
 
-Config.configure_global_app(clean_entities_enabled=True)
-tp.clean_all_entities()
 
-scenario_cfg = Config.configure_scenario(id="scenario", pipeline_configs=pipeline_cfg)
+scenario_cfg = Config.configure_scenario(
+    id="scenario", pipeline_configs=pipeline_cfg)
 
 dataset = pd.read_csv("dataset/data.csv")
 dataset["timestamp"] = pd.to_datetime(dataset["timestamp"])
@@ -26,7 +25,6 @@ selected_model = sim_measure_selector[0]
 n_min_k, n_k_neighboor, x_id, top_k = 1, 10, 1, 1
 # set up parameter of svd model
 n_epochs, n_factors, learning_rate = 30, 40, 0.001
-
 results, y_id, y_id_real, results_real, recall, precision = (
     None,
     None,
@@ -39,7 +37,8 @@ results, y_id, y_id_real, results_real, recall, precision = (
 all_scenarios = tp.get_scenarios()
 [tp.delete(scenario.id) for scenario in all_scenarios if scenario.name is None]
 
-scenario_selector = [(scenario.id, scenario.name) for scenario in tp.get_scenarios()]
+scenario_selector = [(scenario.id, scenario.name)
+                     for scenario in tp.get_scenarios()]
 selected_scenario = None
 
 
@@ -174,7 +173,8 @@ def predicts(state):
     for _, _, true_r, _, est in result:
         user_ratings.append([est, true_r])
     user_ratings = np.array(user_ratings)
-    state.precision, state.recall = calculate_precision_recall(user_ratings, top_k, 3)
+    state.precision, state.recall = calculate_precision_recall(
+        user_ratings, top_k, 3.5)
 
 
 page_scenario_manager = Markdown("recsys/recsys.md")
