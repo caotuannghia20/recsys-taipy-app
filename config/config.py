@@ -1,5 +1,5 @@
 from taipy import Config, Scope
-from functions.funtions import take_data, fit, predict
+from functions.funtions import preprocess_data, fit, predict
 from config.svd_config import (
     n_epochs_cfg,
     n_factors_cfg,
@@ -64,7 +64,7 @@ predictions_cfg = Config.configure_data_node(
 # Config task
 load_data_task_cfg = Config.configure_task(
     id="load_data",
-    function=take_data,
+    function=preprocess_data,
     input=[train_dataset_cfg, test_dataset_cfg, movie_name_cfg],
     output=[trainset_cfg, testset_cfg, true_testset_movies_id_cfg],
 )

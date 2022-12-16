@@ -46,7 +46,7 @@ def fit(
         n_factors (int, optional): Number of latent factors. Defaults to 100.
         n_epochs (int, optional): number of SGD iterations. Defaults to 50.
         learning_rate (float, optional): the common learning rate. Defaults to 0.01.
-        algorithm (str, optional): Model to make recommendations. Defaults to "kNN".
+        algorithm (str, optional): The algorithm used to make recommendations. Possible values are "kNN" or "MF. Defaults to "kNN".
 
     Returns:
         S (numpyarray): Compute the similarity between all pairs of users.
@@ -123,6 +123,7 @@ def predict(
     Returns:
         predictions (numpyarray): Storing all predictions of the given user/item pairs. The first column is user id, the second column is item id, the thirh colums is the actual movie id, the forth column is the observed rating, and the fifth column is the predicted rating.
     """
+
     test_items = []
     test_set = np.zeros(
         (test_set_origin.shape[0], test_set_origin.shape[1] + 1))
