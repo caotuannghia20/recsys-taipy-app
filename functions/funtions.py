@@ -13,10 +13,11 @@ def take_data(
     Args:
         train_data (pd.DataFrame): train data load from "csv" file
         test_data (pd.DataFrame): test data load from "csv" file
-        movie_name_cfg (pd.DataFrame): the name of movies to recommend load from  "csv" file
+        movie_name (pd.DataFrame): the name of movies to recommend load from  "csv" file
 
     Returns:
-        train_set, test_set (numpydarray): Preprocessed data
+        train_set (numpy.array): Preprocessed training data
+        test_set (numpy.array): Preprocessed testing data
         true_testset_movies_id (numpydarray): when convert, the movie_ids are reseting index, list all actual movies_id
     """
     loader = DataLoader()
@@ -37,14 +38,14 @@ def fit(
     learning_rate=0.01,
     algorithm="kNN",
 ):
-    """Train the data
+    """Train the recommendation model.
 
     Args:
         X (numpyarray): Training data.
         sim_measure (str, optional):  Similarity measure function. Defaults to "pcc".
-        n_factors (int, optional): number of latent factors. Defaults to 100.
+        n_factors (int, optional): Number of latent factors. Defaults to 100.
         n_epochs (int, optional): number of SGD iterations. Defaults to 50.
-        learning_rate (float, optional):the common learning rate. Defaults to 0.01.
+        learning_rate (float, optional): the common learning rate. Defaults to 0.01.
         algorithm (str, optional): Model to make recommendations. Defaults to "kNN".
 
     Returns:
@@ -107,7 +108,7 @@ def predict(
         x_id (int): the user_id we want to recommend to him.
         x_rated (numpyarray): All users who rated each item are stored in list.
         S (numpyarray): Compute the similarity between all pairs of users.
-        k (int): Number of neighbors use in prediction
+        k (int): Number of neighbors use in prediction.
         min_k (int): The minimum number of neighbors to take into account for aggregation. If there are not enough neighbors, the neighbor aggregation is set to zero
         x_list (numpyarray): All user id in training set.
         y_list (numpyarray): All movie id in training set.
@@ -117,7 +118,7 @@ def predict(
         bi (numpyarray): items biases vector.
         pu (numpyarray): users latent factor matrix.
         qi (numpyarray): items latent factor matrix.
-        algorithm (str, optional). Model to make recommendations. Defaults to "MF".
+        algorithm (str, optional). The algorithm used to make recommendations. Possible values are "kNN" or "MF. Defaults to "MF".
 
     Returns:
         predictions (numpyarray): Storing all predictions of the given user/item pairs. The first column is user id, the second column is item id, the thirh colums is the actual movie id, the forth column is the observed rating, and the fifth column is the predicted rating.
