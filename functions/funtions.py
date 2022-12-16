@@ -5,7 +5,7 @@ from helper.svd_helper import sgd, predict_svd_pair
 from helper.knn_helper import predict_pair, compute_similarity_matrix
 
 
-def take_data(
+def preprocess_data(
     train_data: pd.DataFrame, test_data: pd.DataFrame, movie_name: pd.DataFrame
 ):
     """Preprocess data from Pd.DataFrame
