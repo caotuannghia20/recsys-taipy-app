@@ -36,7 +36,7 @@ for u in userIds:
     rating_of_u = ratings.loc[ratings.u_id == u]
 
     trainIds_sample = rating_of_u.sample(
-        frac=(1-test_ratio), random_state=7)
+        frac=(1-TEST_RATIO), random_state=7)
     testIds_sample = rating_of_u.drop(trainIds_sample.index.tolist())
 
     for _, rating in trainIds_sample.iterrows():
