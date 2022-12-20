@@ -29,20 +29,12 @@ n_min_k, n_k_neighboor, x_id, top_k = 1, 10, 1, 1
 n_epochs, n_factors, learning_rate = 30, 40, 0.001
 
 results, y_id, y_id_real, results_real, recall, precision = (
-    None,
-    None,
-    None,
-    None,
-    None,
-    None,
-)
+    None, None, None, None, None, None,)
 
 all_scenarios = tp.get_scenarios()
 [tp.delete(scenario.id) for scenario in all_scenarios if scenario.name is None]
 
-scenario_selector = [(scenario.id, scenario.name)
-                     for scenario in tp.get_scenarios()]
-selected_scenario = None
+scenario_selector = [(scenario.id, scenario.name) for scenario in tp.get_scenarios()]
 
 
 def create_scenario(state):
@@ -127,12 +119,7 @@ def take_all_movies_rated_by_x_id(test_set, x_id):
 
 def predicts(state):
     id, predict, id_real, predict_real, user_ratings = (
-        [],
-        [],
-        [],
-        [],
-        [],
-    )
+        [], [], [], [], [],)
     scenario = tp.get(selected_scenario)
     movie_name = (scenario.movie_name.read()).title.to_numpy()
 
@@ -165,11 +152,9 @@ def predicts(state):
         predict_real.append(movie_name[(j - 1)])
 
     state.y_id = np.array2string(
-        np.array(id), precision=2, separator=", ", suppress_small=True
-    )
+        np.array(id), precision=2, separator=", ", suppress_small=True)
     state.y_id_real = np.array2string(
-        np.array(id_real), precision=2, separator=", ", suppress_small=True
-    )
+        np.array(id_real), precision=2, separator=", ", suppress_small=True)
     state.results = predict
     state.results_real = predict_real
 
