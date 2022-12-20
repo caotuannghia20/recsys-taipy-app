@@ -2,52 +2,50 @@ import pandas as pd
 import numpy as np
 
 test_ratio = 0.2
-val_ratio = 0.1
-print("\nReading the ratings file...")
-ratings = pd.read_csv("rating_val_date.csv")
-dates = ratings.userId.unique()
+
+
+def convert_data_to_dataframe(data_path: str):
+    data = pd.read_table(data_path)
+    data.columns = ["u_id", "i_id", "rating", "timestamp"]
+    data_sort = data.sort_values(by=["u_id"])
+    return data_sort
+
 
 movies_list = []
+
+print("\nReading the ratings file...")
+ratings = convert_data_to_dataframe("u.data")
+
+userIds = ratings.u_id.unique()
+
 trainIds = []
 testIds = []
-valIds = []
 
 print("Splitting the ratings data...")
-for date in dates:
-    rating_of_date = ratings.loc[ratings.timestamp == date]
+for u in userIds:
+    rating_of_u = ratings.loc[ratings.u_id == u]
 
-    trainIds_sample = rating_of_date.sample(
-        frac=(1 - test_ratio - val_ratio), random_state=7
-    )
-    valIds_sample = rating_of_date.drop(trainIds_sample.index.tolist()).sample(
-        frac=(val_ratio / (val_ratio + test_ratio)), random_state=8
-    )
-    testIds_sample = rating_of_date.drop(trainIds_sample.index.tolist()).drop(
-        valIds_sample.index.tolist()
-    )
+    trainIds_sample = rating_of_u.sample(
+        frac=(1-test_ratio), random_state=7)
+    testIds_sample = rating_of_u.drop(trainIds_sample.index.tolist())
 
     for _, rating in trainIds_sample.iterrows():
-        if rating.movieId not in movies_list:
+        if rating.i_id not in movies_list:
             # Append new movie's Id to the movie list
-            movies_list.append(rating.movieId)
+            movies_list.append(rating.u_id)
 
     trainIds_sample = trainIds_sample.index.values
     trainIds_sample.sort()
     trainIds = np.append(trainIds, trainIds_sample)
 
-    valIds_sample = valIds_sample.index.values
-    valIds_sample.sort()
-    valIds = np.append(valIds, valIds_sample)
-
     testIds_sample = testIds_sample.index.values
     testIds_sample.sort()
     testIds = np.append(testIds, testIds_sample)
+print("Done.")
 
 print("Write ratings to new file...")
 train = ratings.loc[ratings.index.isin(trainIds)]
-train.to_csv("/rating_train.csv", index=False)
+train.to_csv("rating_train.csv", index=False)
 test = ratings.loc[ratings.index.isin(testIds)]
-test.to_csv("/rating_test.csv", index=False)
-val = ratings.loc[ratings.index.isin(valIds)]
-val.to_csv("/rating_val.csv", index=False)
+test.to_csv("rating_test.csv", index=False)
 print("Done.")
