@@ -4,7 +4,7 @@ from ultis.dataloader import DataLoader
 from helper.svd_helper import sgd, predict_svd_pair
 from helper.knn_helper import predict_pair, compute_similarity_matrix
 
-model = ["kNN", "MF"]
+VALID_ALGORITHM = ["kNN", "MF"]
 def preprocess_data(
     train_data: pd.DataFrame, test_data: pd.DataFrame, movie_name: pd.DataFrame
 ):
@@ -59,8 +59,8 @@ def fit(
         bu (numpyarray): Users biases vector.
         bi (numpyarray): Items biases vector.
     """
-    if algorithm not in model:
-        raise SystemExit(f"{algorithm} is not avalid algorithm ")
+    if algorithm not in VALID_ALGORITHM:
+        raise SystemExit(f"{algorithm} is not a valid algorithm. Possible values are {VALID_ALGORITHM}.\n")
 
     global_mean = np.mean(X[:, 2])
     if algorithm == "kNN":
@@ -121,13 +121,13 @@ def predict(
         bi (numpyarray): Items biases vector.
         pu (numpyarray): Users latent factor matrix.
         qi (numpyarray): Items latent factor matrix.
-        algorithm (str, optional): The algorithm used to make recommendations. Possible values are "kNN" or "MF. Defaults to "MF".
+        algorithm (str, optional): The algorithm used to make recommendations. Possible values are "kNN" or "MF". Defaults to "MF".
 
     Returns:
         predictions (numpyarray): Storing all predictions of the given user/item pairs. The first column is user id, the second column is item id, the thirh colums is the actual movie id, the forth column is the observed rating, and the fifth column is the predicted rating.
     """
-    if algorithm not in model:
-        raise SystemExit(f"{algorithm} is not avalid algorithm ")
+    if algorithm not in VALID_ALGORITHM:
+        raise SystemExit(f"{algorithm} is not a valid algorithm. Possible values are {VALID_ALGORITHM}.\n")
     test_items = []
     test_set = np.zeros(
         (test_set_origin.shape[0], test_set_origin.shape[1] + 1))
