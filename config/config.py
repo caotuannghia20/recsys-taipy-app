@@ -19,11 +19,14 @@ from config.kNN_config import (
     users_id_cfg,
     items_id_cfg,
 )
+TRAIN_DATA_PATH = "dataset/rating_train.csv"
+TEST_DATA_PATH = "dataset/rating_test.csv"
+MOVIE_DATA_PATH = "dataset/movie.csv"
 
 train_dataset_cfg = Config.configure_data_node(
     id="train_dataset",
     storage_type="csv",
-    path="dataset/rating_train.csv",
+    path=TRAIN_DATA_PATH,
     scope=Scope.GLOBAL,
     cacheable=True,
 )
@@ -31,14 +34,14 @@ train_dataset_cfg = Config.configure_data_node(
 test_dataset_cfg = Config.configure_data_node(
     id="test_dataset",
     storage_type="csv",
-    path="dataset/rating_test.csv",
+    path=TEST_DATA_PATH,
     scope=Scope.GLOBAL,
     cacheable=True,
 )
 movie_name_cfg = Config.configure_data_node(
     id="movie_name",
     storage_type="csv",
-    path="dataset/movie.csv",
+    path=MOVIE_DATA_PATH,
     scope=Scope.GLOBAL,
     cacheable=True,
 )
@@ -50,14 +53,13 @@ testset_cfg = Config.configure_data_node(
     id="testset", scope=Scope.PIPELINE, cacheable=True)
 
 true_testset_movies_id_cfg = Config.configure_data_node(
-    id="true_testset_movies_id", scope=Scope.PIPELINE, cacheable=True)
-
+    id="true_testset_movies_id", scope=Scope.PIPELINE, cacheable=True
+)
 algorithm_cfg = Config.configure_in_memory_data_node(
     id="algorithm", default_data="kNN")
-
 global_mean_cfg = Config.configure_data_node(
-    id="global_mean", cope=Scope.GLOBAL, cacheable=True)
-
+    id="global_mean", cope=Scope.GLOBAL, cacheable=True
+)
 predictions_cfg = Config.configure_data_node(
     id="predictions", scope=Scope.PIPELINE)
 

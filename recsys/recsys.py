@@ -34,8 +34,7 @@ results, y_id, y_id_real, results_real, recall, precision = (
 all_scenarios = tp.get_scenarios()
 [tp.delete(scenario.id) for scenario in all_scenarios if scenario.name is None]
 
-scenario_selector = [(scenario.id, scenario.name)
-                     for scenario in tp.get_scenarios()]
+scenario_selector = [(scenario.id, scenario.name) for scenario in tp.get_scenarios()]
 
 
 def create_scenario(state):
