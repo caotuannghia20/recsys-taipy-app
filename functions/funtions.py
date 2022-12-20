@@ -4,21 +4,21 @@ from ultis.dataloader import DataLoader
 from helper.svd_helper import sgd, predict_svd_pair
 from helper.knn_helper import predict_pair, compute_similarity_matrix
 
-
+model = ["kNN", "MF"]
 def preprocess_data(
     train_data: pd.DataFrame, test_data: pd.DataFrame, movie_name: pd.DataFrame
 ):
-    """Preprocess data from Pd.DataFrame
+    """Preprocess data from Pd.DataFrame.
 
     Args:
-        train_data (pd.DataFrame): train data load from "csv" file
-        test_data (pd.DataFrame): test data load from "csv" file
-        movie_name (pd.DataFrame): the name of movies to recommend load from  "csv" file
+        train_data (pd.DataFrame): Train data load from "csv" file.
+        test_data (pd.DataFrame): Test data load from "csv" file.
+        movie_name (pd.DataFrame): The name of movies to recommend load from  "csv" file.
 
     Returns:
-        train_set (numpy.array): Preprocessed training data
-        test_set (numpy.array): Preprocessed testing data
-        true_testset_movies_id (numpydarray): when convert, the movie_ids are reseting index, list all actual movies_id
+        train_set (numpy.array): Preprocessed training data.
+        test_set (numpy.array): Preprocessed testing data.
+        true_testset_movies_id (numpydarray): When convert, the movie_ids are reseting index, list all actual movies_id.
     """
     loader = DataLoader()
     true_testset_movies_id = test_data.i_id.to_numpy()
@@ -44,8 +44,8 @@ def fit(
         X (numpyarray): Training data.
         sim_measure (str, optional):  Similarity measure function. Defaults to "pcc".
         n_factors (int, optional): Number of latent factors. Defaults to 100.
-        n_epochs (int, optional): number of SGD iterations. Defaults to 50.
-        learning_rate (float, optional): the common learning rate. Defaults to 0.01.
+        n_epochs (int, optional): Number of SGD iterations. Defaults to 50.
+        learning_rate (float, optional): The common learning rate. Defaults to 0.01.
         algorithm (str, optional): The algorithm used to make recommendations. Possible values are "kNN" or "MF. Defaults to "kNN".
 
     Returns:
@@ -53,12 +53,15 @@ def fit(
         x_rated (numpyarray): All users who rated each item are stored in list.
         x_list (numpyarray): All user id in training set.
         y_list (numpyarray): All movie id in training set.
-        global_mean (float): mean ratings in training set.
-        pu (numpyarray): users latent factor matrix.
-        qi (numpyarray): items latent factor matrix.
-        bu (numpyarray): users biases vector.
-        bi (numpyarray): items biases vector.
+        global_mean (float): Mean ratings in training set.
+        pu (numpyarray): Users latent factor matrix.
+        qi (numpyarray): Items latent factor matrix.
+        bu (numpyarray): Users biases vector.
+        bi (numpyarray): Items biases vector.
     """
+    if algorithm not in model:
+        raise SystemExit(f"{algorithm} is not avalid algorithm ")
+
     global_mean = np.mean(X[:, 2])
     if algorithm == "kNN":
         S, x_rated, x_list, y_list = compute_similarity_matrix(
@@ -101,29 +104,30 @@ def predict(
     global_mean, true_testset_movies_id,
     bu, bi, pu, qi, algorithm="MF",
 ):
-    """Predict the ratings to movies
+    """Predict the ratings to movies.
 
     Args:
-        test_set_origin (numpyarray): storing all user/item pairs we want to predict the ratings.
-        x_id (int): the user_id we want to recommend to him.
+        test_set_origin (numpyarray): Storing all user/item pairs we want to predict the ratings.
+        x_id (int): The user_id we want to recommend to him.
         x_rated (numpyarray): All users who rated each item are stored in list.
         S (numpyarray): Compute the similarity between all pairs of users.
         k (int): Number of neighbors use in prediction.
         min_k (int): The minimum number of neighbors to take into account for aggregation. If there are not enough neighbors, the neighbor aggregation is set to zero
         x_list (numpyarray): All user id in training set.
         y_list (numpyarray): All movie id in training set.
-        global_mean (float): mean ratings in training set.
-        true_testset_movies_id (numpyarray): list all actual movie id.
-        bu (numpyarray): users biases vector.
-        bi (numpyarray): items biases vector.
-        pu (numpyarray): users latent factor matrix.
-        qi (numpyarray): items latent factor matrix.
-        algorithm (str, optional). The algorithm used to make recommendations. Possible values are "kNN" or "MF. Defaults to "MF".
+        global_mean (float): Mean ratings in training set.
+        true_testset_movies_id (numpyarray): List all actual movie id.
+        bu (numpyarray): Users biases vector.
+        bi (numpyarray): Items biases vector.
+        pu (numpyarray): Users latent factor matrix.
+        qi (numpyarray): Items latent factor matrix.
+        algorithm (str, optional): The algorithm used to make recommendations. Possible values are "kNN" or "MF. Defaults to "MF".
 
     Returns:
         predictions (numpyarray): Storing all predictions of the given user/item pairs. The first column is user id, the second column is item id, the thirh colums is the actual movie id, the forth column is the observed rating, and the fifth column is the predicted rating.
     """
-
+    if algorithm not in model:
+        raise SystemExit(f"{algorithm} is not avalid algorithm ")
     test_items = []
     test_set = np.zeros(
         (test_set_origin.shape[0], test_set_origin.shape[1] + 1))

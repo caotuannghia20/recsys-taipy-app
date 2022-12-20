@@ -23,7 +23,7 @@ from config.kNN_config import (
 train_dataset_cfg = Config.configure_data_node(
     id="train_dataset",
     storage_type="csv",
-    path="dataset/train_data_mini.csv",
+    path="dataset/rating_train.csv",
     scope=Scope.GLOBAL,
     cacheable=True,
 )
@@ -31,7 +31,7 @@ train_dataset_cfg = Config.configure_data_node(
 test_dataset_cfg = Config.configure_data_node(
     id="test_dataset",
     storage_type="csv",
-    path="dataset/test_data_mini.csv",
+    path="dataset/rating_test.csv",
     scope=Scope.GLOBAL,
     cacheable=True,
 )
