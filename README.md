@@ -14,11 +14,16 @@ First, edit the `TEST_RATIO` and `MOVIELENS_DATA_PATH` on `ultis/splitdata.py` t
 ```
 python utils/splitdata.py
 ```
- - Step 4: Edit the dataset path in `config/config.py` line 26, 34, 41
+ - Step 4: Edit the dataset path in `config/config.py` line 22, 23, 24
  - Step 5: Install the requirements enviroment, type : <br/>
- <code>pip install -r requirements.txt </code>
- - Step 6: At the conmmand prompt, type : <br/>
- <code>python main.py</code> <br/> to run the application on a local machine
+```
+pip install -r requirements.txt
+```
+ - Step 6: On your command prompt, run <br/>
+```
+python main.py
+ ``` 
+<br/> to run the application on a local machine
 ## Use the application
 After run the application:
 
