@@ -1,4 +1,4 @@
-# MOVIE REOMMENDATION SYSTEM
+# MOVIE RECOMMENDATION SYSTEM
 #Choose the model
 <|{selected_model}|selector|lov={model_selector}|width = 100|dropdown|>
 <|part|render={selected_model == "MF"}|
