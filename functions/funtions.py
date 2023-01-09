@@ -5,6 +5,8 @@ from helper.svd_helper import sgd, predict_svd_pair
 from helper.knn_helper import predict_pair, compute_similarity_matrix
 
 VALID_ALGORITHM = ["kNN", "MF"]
+
+
 def preprocess_data(
     train_data: pd.DataFrame, test_data: pd.DataFrame, movie_name: pd.DataFrame
 ):
@@ -60,7 +62,8 @@ def fit(
         bi (numpyarray): Items biases vector.
     """
     if algorithm not in VALID_ALGORITHM:
-        raise SystemExit(f"{algorithm} is not a valid algorithm. Possible values are {VALID_ALGORITHM}.\n")
+        raise SystemExit(
+            f"{algorithm} is not a valid algorithm. Possible values are {VALID_ALGORITHM}.\n")
 
     global_mean = np.mean(X[:, 2])
     if algorithm == "kNN":
@@ -127,14 +130,17 @@ def predict(
         predictions (numpyarray): Storing all predictions of the given user/item pairs. The first column is user id, the second column is item id, the thirh colums is the actual movie id, the forth column is the observed rating, and the fifth column is the predicted rating.
     """
     if algorithm not in VALID_ALGORITHM:
-        raise SystemExit(f"{algorithm} is not a valid algorithm. Possible values are {VALID_ALGORITHM}.\n")
+        raise SystemExit(
+            f"{algorithm} is not a valid algorithm. Possible values are {VALID_ALGORITHM}.\n")
     test_items = []
     test_set = np.zeros(
         (test_set_origin.shape[0], test_set_origin.shape[1] + 1))
     test_set[:, :3] = test_set_origin
     test_set[:, 3] = true_testset_movies_id.T
+    test_set[:, [0, 1]] = test_set[:, [1, 0]]
+
     for index in range(test_set.shape[0]):
-        if test_set[index][0] == x_id:
+        if test_set[index][1] == x_id:
             test_items.append(test_set[index])
     test_items = np.array(test_items)
     n_pairs = test_items.shape[0]

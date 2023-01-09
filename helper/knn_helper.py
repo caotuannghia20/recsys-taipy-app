@@ -17,7 +17,8 @@ def compute_similarity_matrix(train_set, sim_measure="pcc"):
 
 def fit_train_set(train_set):
     X = train_set.copy()
-    # X[:, [0, 1]] = X[:, [1, 0]]  # Swap user_id column to movie_id column if using iiCF
+    # Swap user_id column to movie_id column if using iiCF
+    X[:, [0, 1]] = X[:, [1, 0]]
 
     x_list = np.unique(X[:, 0])  # For uuCF, x -> user
     y_list = np.unique(X[:, 1])  # For uuCF, y -> item
